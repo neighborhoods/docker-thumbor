@@ -1,0 +1,33 @@
+version: '2'
+services:
+  thumbor:
+    image: neighborhoods/thumbor:latest
+    #build: thumbor
+    volumes:
+      - data:/data
+      - logs:/logs
+      - $HOME/.aws:/root/.aws
+      - $HOME/.aws:/var/www/.aws
+    ports:
+      - "8080:8000" # thumbor port
+    environment:
+      - DETECTORS=[]
+      - SECURITY_KEY=e0Jf47P7htkjJhED
+      - ALLOW_UNSAFE_URL=False
+      - AUTO_WEBP=True
+      - STORAGE=thumbor.storages.no_storage
+      - TC_AWS_REGION=us-east-1
+      - LOADER=tc_aws.loaders.s3_loader
+      - TC_AWS_ENABLE_HTTP_LOADER=True
+      - TC_AWS_ALLOWED_BUCKETS=['nhds-mlsphotos','nhds-areaphotos']
+      - RESULT_STORAGE=thumbor.result_storages.no_storage
+    networks:
+      - app
+volumes:
+  data:
+    driver: local
+  logs:
+    driver: local
+networks:
+  app:
+    driver: bridge
