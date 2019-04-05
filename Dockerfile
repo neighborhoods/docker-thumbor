@@ -1,9 +1,11 @@
-FROM python:2
+FROM python:2.7-jessie
 WORKDIR /usr/src/app
 VOLUME /data
 
-RUN awk '$1 ~ "^deb" { $3 = $3 "-backports"; print; exit }' /etc/apt/sources.list > /etc/apt/sources.list.d/backports.list && \
-    apt-get update && \
+RUN echo "deb [check-valid-until=no] http://cdn-fastly.deb.debian.org/debian jessie main" > /etc/apt/sources.list.d/jessie.list
+RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
+RUN apt-get -o Acquire::Check-Valid-Until=false update && \
     apt-get -y upgrade && \
     apt-get -y autoremove && \
     apt-get install -y --no-install-recommends \
