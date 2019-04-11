@@ -23,6 +23,7 @@ RUN apt-get -o Acquire::Check-Valid-Until=false update && \
         gifsicle \
         ffmpeg
 
+RUN git clone --depth 1 https://github.com/neighborhoods/tc_aws.git /tc_aws
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip==9.0.3 && pip install --no-cache-dir -r requirements.txt
 
