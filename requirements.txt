@@ -11,3 +11,4 @@ thumbor==6.4.2
 raven==5.15.0
 pgmagick==0.6.1
 graphicsmagick-engine==0.1.1
+python-json-logger==0.1.11
