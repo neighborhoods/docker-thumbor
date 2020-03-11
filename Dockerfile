@@ -9,6 +9,7 @@ RUN apt-get -o Acquire::Check-Valid-Until=false update && \
     apt-get -y upgrade && \
     apt-get -y autoremove && \
     apt-get install -y --no-install-recommends \
+        ca-certificates \
         python-numpy \
         python-opencv \
         git \
@@ -25,7 +26,7 @@ RUN apt-get -o Acquire::Check-Valid-Until=false update && \
 
 RUN git clone --depth 1 https://github.com/neighborhoods/tc_aws.git /tc_aws
 COPY requirements.txt requirements.txt
-RUN pip install --upgrade pip==9.0.3 && pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip==20.0.2 && pip install --no-cache-dir -r requirements.txt
 
 COPY conf/thumbor.conf.tpl thumbor.conf.tpl
 ENV PYTHONPATH /usr/lib/python2.7/site-packages:/usr/local/lib/python2.7/site-packages
